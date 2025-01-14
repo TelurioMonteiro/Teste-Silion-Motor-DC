@@ -11,13 +11,12 @@
 
 // #include <Motor_header.h>
 
-
 /*-- To do
 Crie um projeto, esquemático e placa, usando o software de sua preferência que atenda os seguintes requisitos:
 -Utilize um microcontrolador de sua preferência
 -Utilize um motor DC de 5V que deverá ser acionado pelo microcontrolador
 -Utilize um display 16x2, que deverá se comunicar com o microcontrolador utilizando uma das seguintes opções de comunicação: i2c ou por barramento.
--Utilize um push-button conectado a uma entrada do microcontrolador 
+-Utilize um push-button conectado a uma entrada do microcontrolador
 -A placa será alimentada por uma fonte externa de 5v.
 -Implemente um trecho de código em linguagem C (não é necessário compilar, mas é importante seguir as boas práticas), para tratar a leitura do sinal do Botão e a partir deste sinal, acionar a saída que irá ligar o motor. O motor deve permanecer ligado por 10 segundos após cada acionamento.
 [OPCIONAL] Dimensionar uma fonte DC que receba até 36v e alimente a sua placa com 5v.
@@ -32,18 +31,18 @@ Crie um projeto, esquemático e placa, usando o software de sua preferência que
 
 // ---- Definições ----
 //--Pinos utilizados
-#define MOTOR_PIN 5            // Pino para acionar o motor
-#define BUTTON_PIN 4           // Pino do push-button
+#define MOTOR_PIN 16 // Pino para acionar o motor
+#define BUZZ_PIN 15      // Pino do buzzer
+#define BUTTON_PIN 4 // Pino do push-button
 
 //-- Default Config
-#define I2C_ADDR 0x27          // Endereço I2C do display 16x2
+#define I2C_ADDR 0x27 // Endereço I2C do display 16x2
 
 // ---- Instâncias ----
 LiquidCrystal_I2C lcd(I2C_ADDR, 16, 2); // Inicializa o display
 
 // ---- Variáveis Globais ----
 //--Configs
-
 
 // ---- Protótipos das Funções ----
 /**
@@ -68,6 +67,5 @@ void buzzBeep(int beeps = 1, int ms = 50);
  * @brief Trata o acionamento do botão
  */
 void handleButtonPress();
-
 
 // end

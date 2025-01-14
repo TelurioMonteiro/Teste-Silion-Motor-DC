@@ -10,11 +10,13 @@
 
 void setup() {
   pinMode(MOTOR_PIN, OUTPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-  lcd.begin();
+  pinMode(BUZZ_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT);
+  lcd.init();
   lcd.backlight();
   lcd.setCursor(0, 0);
   lcd.print("Motor DC Silion");
+  Serial.begin(115200); // Inicializa a comunicação serial
 }
 
 void loop() {
@@ -23,17 +25,20 @@ void loop() {
 
 void handleButtonPress() {
   static unsigned long lastPressTime = 0;
-  if (digitalRead(BUTTON_PIN) == LOW) {
+  if (digitalRead(BUTTON_PIN) == HIGH) {
     if (millis() - lastPressTime > 200) { // Debounce
       digitalWrite(MOTOR_PIN, HIGH);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Motor Ligado");
+      //Serial.println("Motor Ligado"); // Imprime no monitor serial
+      buzzBeep(2, 100);// Beep 2 vezes
       delay(10000); // Motor ligado por 10 segundos
       digitalWrite(MOTOR_PIN, LOW);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Motor Desligado");
+      //Serial.println("Motor Desligado"); // Imprime no monitor serial
       lastPressTime = millis();
     }
   }
@@ -42,9 +47,11 @@ void handleButtonPress() {
 void buzzBeep(int beeps, int ms) {
   if (beeps <= 0)
     return;
-  digitalWrite(BUZZ, HIGH);
+  //Serial.print("Beep "); // Adiciona mensagem de depuração
+  Serial.println(beeps);
+  digitalWrite(BUZZ_PIN, HIGH);
   delay(ms);
-  digitalWrite(BUZZ, LOW);
+  digitalWrite(BUZZ_PIN, LOW);
   delay(ms);
   buzzBeep(beeps - 1, ms);
 }  // fim buzzBeep()
